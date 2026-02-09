@@ -14,10 +14,10 @@
         }
         @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .card { background: rgba(0,0,0,0.85); padding: 30px; border-radius: 20px; text-align: center; border: 2px solid #fff; width: 85%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .qr { width: 220px; border-radius: 15px; border: 4px solid white; margin: 15px 0; }
-        .price { font-size: 26px; font-weight: bold; color: #fbbf24; }
+        .price { font-size: 26px; font-weight: bold; color: #fbbf24; margin-bottom: 10px; }
+        .info-box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px dashed #fff; }
         .input-box { width: 90%; padding: 12px; margin: 15px 0; border-radius: 10px; border: none; text-align: center; font-size: 16px; font-weight: bold; background: #eee; color: #333; }
-        .btn-pay { background: #25D366; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; text-decoration: none; display: block; margin-bottom: 10px; }
+        .btn-pay { background: #25D366; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; text-decoration: none; display: block; margin-top: 10px; }
         .btn-unlock { background: #38bdf8; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
         #builder-area { display: none; margin-top: 20px; border-top: 2px dashed #fff; padding-top: 20px; }
         .link-item { background: #fff; color: #333; padding: 10px; display: block; margin: 10px 0; border-radius: 10px; text-decoration: none; font-weight: bold; }
@@ -31,15 +31,16 @@
         <p>Worldwide App Project</p>
         <div class="price">Fees: ₹50</div>
         
-        <img src="https://i.postimg.cc/85M6Xm0m/QR-Code.jpg" class="qr" alt="Scan to Pay">
-        
-        <p><b>UPI: 6376409506@fam</b></p>
-        
+        <div class="info-box">
+            <p style="margin: 5px 0; font-size: 14px;">👇 Link kholne ke liye niche diye gaye UPI number par payment karein 👇</p>
+            <p style="margin: 10px 0;">🆔 **UPI ID:** <br> <b style="font-size: 20px; color: #fbbf24;">6376409506@fam</b></p>
+        </div>
+
         <a href="https://wa.me/918302930046" class="btn-pay">SEND SCREENSHOT (WhatsApp)</a>
         
         <hr style="margin: 20px 0; opacity: 0.3;">
         
-        <p>Payment Code yahan daalein:</p>
+        <p>Unlock Code Daalein:</p>
         <input type="text" id="passInput" class="input-box" placeholder="Enter Code">
         <button class="btn-unlock" onclick="checkPass()">UNLOCK NOW</button>
     </div>
@@ -50,7 +51,7 @@
         <a href="https://gdevelop.io/" class="link-item" target="_blank">🎮 Start Game Maker</a>
     </div>
 
-    <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">DTA Worldwide | Founder: Devesh [cite: 2026-02-09]</p>
+    <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">DTA Worldwide | Founder: Devesh</p>
 </div>
 
 <script>
@@ -60,11 +61,10 @@
             document.getElementById('payment-gate').style.display = 'none';
             document.getElementById('builder-area').style.display = 'block';
         } else {
-            alert("Galat Code! Pehle WhatsApp par contact karein.");
+            alert("Galat Code! Pehle ₹50 Pay karein.");
         }
     }
 </script>
 
 </body>
-        </html>
-    
+</html>
