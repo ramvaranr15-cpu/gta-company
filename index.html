@@ -12,60 +12,61 @@
             color: white; font-family: 'Segoe UI', sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
         }
-        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .card { background: rgba(0,0,0,0.85); padding: 30px; border-radius: 20px; text-align: center; border: 2px solid #fff; width: 85%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .price { font-size: 26px; font-weight: bold; color: #fbbf24; margin-bottom: 10px; }
-        .info-box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px dashed #fff; }
-        .input-box { width: 90%; padding: 12px; margin: 15px 0; border-radius: 10px; border: none; text-align: center; font-size: 16px; font-weight: bold; background: #eee; color: #333; }
-        .btn-pay { background: #25D366; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; text-decoration: none; display: block; margin-top: 10px; }
-        .btn-unlock { background: #38bdf8; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
-        #builder-area { display: none; margin-top: 20px; border-top: 2px dashed #fff; padding-top: 20px; }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .card { background: rgba(0,0,0,0.85); padding: 30px; border-radius: 20px; text-align: center; border: 2px solid #fff; width: 350px; }
+        .payment-gate { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px dashed #fff; }
+        .pin-lock { width: 90%; padding: 12px; margin: 15px 0; border-radius: 10px; border: none; text-align: center; font-size: 18px; }
+        .btn-pay { background: #25D366; color: white; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; text-decoration: none; display: block; margin-top: 10px; }
+        .btn-unlock { background: #43bbd8; color: white; padding: 12px; border-radius: 10px; width: 100%; border: none; font-weight: bold; cursor: pointer; }
         .link-item { background: #fff; color: #333; padding: 10px; display: block; margin: 10px 0; border-radius: 10px; text-decoration: none; font-weight: bold; }
-    </style><script src="https://pl30614556.effectivecpmnetwork.com/14/42/77/144277873e4fc13615b306d36d82f88f3.js"></script>
-    
+    </style>
+    <!-- Adsterra Script -->
+    <script src="https://pl30616397.effectivecpmnetwork.com/62/2e/4f/622e4fa456ab571077603cbf968f0d95.js"></script>
 </head>
 <body>
 
-<div class="card">
-    <div id="payment-gate">
-        <h1 style="margin:0;">🛠️ DTA BUILDER</h1>
-        <p>Worldwide App Project</p>
-        <div class="price">Fees: ₹50</div>
-        
-        <div class="info-box">
-            <p style="margin: 5px 0; font-size: 14px;">👇 Link kholne ke liye niche diye gaye UPI number par payment karein 👇</p>
-            <p style="margin: 10px 0;">🆔 **UPI ID:** <br> <b style="font-size: 20px; color: #fbbf24;">6376409506@fam</b></p>
+    <div class="card">
+        <div id="payment-gate">
+            <h1>DTA BUILDER</h1>
+            <p>Worldwide App Project</p>
+            <div class="price">Fees: ₹50</div>
+            <div class="info-box">
+                <p style="margin: 5px 0; font-size: 14px;">👉 Link kholne ke liye niche diye gaye UPI number par payment karein</p>
+                <p style="margin: 10px 0;"><b style="font-size: 20px; color: #ffbf24;">6376409506@fam</b></p>
+            </div>
+            <a href="https://wa.me/918302930046" class="btn-pay" target="_blank">SEND SCREENSHOT (WhatsApp)</a>
         </div>
 
-        <a href="https://wa.me/918302930046" class="btn-pay">SEND SCREENSHOT (WhatsApp)</a>
-        
-        <hr style="margin: 20px 0; opacity: 0.3;">
-        
-        <p>Unlock Code Daalein:</p>
-        <input type="text" id="passInput" class="input-box" placeholder="Enter Code">
+        <div style="margin: 20px 0; opacity: 0.3;">────────────────</div>
+
+        <p>Unlock Code Dalein:</p>
+        <input type="text" id="passInput" class="pin-lock" placeholder="Enter Code">
         <button class="btn-unlock" onclick="checkPass()">UNLOCK NOW</button>
+
+        <div id="builder-area" style="display:none; margin-top: 20px;">
+            <h2 style="color: #4ade80;">✅ UNLOCKED</h2>
+            <a href="https://appinventor.mit.edu/" class="link-item" target="_blank">🚀 Start App Maker</a>
+            <a href="https://gdevelop.io/" class="link-item" target="_blank">🎮 Start Game Maker</a>
+        </div>
+
+        <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">DTA Worldwide | Founder: Devesh</p>
     </div>
 
-    <div id="builder-area">
-        <h2 style="color: #4ade80;">✅ UNLOCKED</h2>
-        <a href="https://appinventor.mit.edu/" class="link-item" target="_blank">📲 Start App Maker</a>
-        <a href="https://gdevelop.io/" class="link-item" target="_blank">🎮 Start Game Maker</a>
-    </div>
-
-    <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">DTA Worldwide | Founder: Devesh</p>
-</div>
-
-<script>
-    function checkPass() {
-        var p = document.getElementById('passInput').value;
-        if(p === "DTA50") {
-            document.getElementById('payment-gate').style.display = 'none';
-            document.getElementById('builder-area').style.display = 'block';
-        } else {
-            alert("Galat Code! Pehle ₹50 Pay karein.");
+    <script>
+        function checkPass() {
+            let p = document.getElementById('passInput').value;
+            if (p === "DTA50") {
+                document.getElementById('payment-gate').style.display = 'none';
+                document.getElementById('builder-area').style.display = 'block';
+            } else {
+                alert('Galat Code! Payment karne ke baad sahi code dalein.');
+            }
         }
-    }
-</script>
-
+    </script>
 </body>
-</html>
+                </html>
+                
