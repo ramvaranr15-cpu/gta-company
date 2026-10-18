@@ -2,21 +2,21 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTA Super AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DTA Super AI v2</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
         body {
             background-color: #0b0f19;
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
         header {
@@ -26,33 +26,39 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
         header h1 {
             font-size: 1.1rem;
-            color: #38bdf8;
+            color: #facc15;
         }
         .header-btns {
             display: flex;
             gap: 8px;
         }
-        .live-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
         .small-btn {
             background: #334155;
-            color: white;
+            color: #fff;
             border: none;
             padding: 6px 10px;
             border-radius: 15px;
             font-size: 0.8rem;
             cursor: pointer;
+        }
+        .small-btn.active {
+            background: #22c55e;
+            color: #000;
+            font-weight: bold;
+        }
+        #status-bar {
+            background: #facc15;
+            color: #000;
+            text-align: center;
+            font-size: 0.85rem;
+            padding: 6px;
+            display: none;
+            font-weight: bold;
+            flex-shrink: 0;
         }
         #chat-box {
             flex: 1;
@@ -63,13 +69,12 @@
             gap: 12px;
         }
         .msg {
-            max-width: 88%;
+            max-width: 85%;
             padding: 12px 15px;
             border-radius: 15px;
             line-height: 1.5;
             font-size: 0.95rem;
             word-wrap: break-word;
-            white-space: pre-wrap;
         }
         .user-msg {
             background: #2563eb;
@@ -84,18 +89,16 @@
             border-bottom-left-radius: 2px;
             border: 1px solid #38bdf8;
         }
-        .action-row {
+        .speak-btn {
+            display: inline-block;
             margin-top: 8px;
-            display: flex;
-            gap: 8px;
-        }
-        .mini-btn {
-            background: #0f172a;
-            color: #38bdf8;
-            border: 1px solid #334155;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 0.78rem;
+            background: #38bdf8;
+            color: #000;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
             cursor: pointer;
         }
         .input-area {
@@ -105,6 +108,7 @@
             gap: 8px;
             align-items: center;
             border-top: 1px solid #334155;
+            flex-shrink: 0;
         }
         .input-area input {
             flex: 1;
@@ -118,7 +122,7 @@
         }
         .btn {
             background: #38bdf8;
-            color: #000;
+            color: #0f172a;
             border: none;
             width: 45px;
             height: 45px;
@@ -126,116 +130,100 @@
             font-weight: bold;
             cursor: pointer;
             font-size: 1.2rem;
+            flex-shrink: 0;
         }
         .btn-mic {
             background: #ef4444;
             color: white;
         }
-
-        /* LIVE SCREEN */
-        #live-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #050811;
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 20px;
-            z-index: 999;
-        }
-        .orb {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            box-shadow: 0 0 50px rgba(56, 189, 248, 0.7);
-            transition: all 0.3s ease;
-        }
-        .orb.listening {
-            background: linear-gradient(135deg, #22c55e, #4ade80);
-            box-shadow: 0 0 70px rgba(34, 197, 94, 0.9);
-            transform: scale(1.12);
-        }
-        .orb.speaking {
-            background: linear-gradient(135deg, #facc15, #f97316);
-            box-shadow: 0 0 80px rgba(250, 204, 21, 0.9);
-            transform: scale(1.18);
+        .btn-mic.listening {
+            background: #22c55e;
+            box-shadow: 0 0 12px #22c55e;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🤖 DTA Super AI</h1>
+    <h1>⚡ DTA Voice AI (New)</h1>
     <div class="header-btns">
-        <button class="live-btn" onclick="openLive()">🔴 LIVE</button>
+        <button id="voiceToggle" class="small-btn active" onclick="toggleVoice()">🔊 आवाज़ ON</button>
         <button class="small-btn" onclick="clearChat()">साफ़ करें</button>
     </div>
 </header>
 
+<div id="status-bar">🎤 बोलिए, मैं सुन रहा हूँ...</div>
+
 <div id="chat-box">
-    <div class="msg ai-msg">नमस्ते देवेश भाई! मैं बिल्कुल ठीक हो गया हूँ। अब आप मुझसे कोडिंग भी करवा सकते हैं और बोलकर बात भी कर सकते हैं!</div>
+    <div class="msg ai-msg">
+        🎉 बधाई हो! आपका नया <b>DTA Voice AI</b> अपडेट हो गया है। अब कोई API Key नहीं लगेगी!
+        <br><button class="speak-btn" onclick="speakText('बधाई हो देवेश! आपका नया डीटीए वॉयस एआई चालू हो गया है। अब आप मुझसे बोलकर बात कर सकते हैं।')">🔊 मेरी आवाज़ टेस्ट करें</button>
+    </div>
 </div>
 
 <div class="input-area">
-    <button class="btn btn-mic" onclick="startMic()">🎤</button>
-    <input type="text" id="userInput" placeholder="यहाँ लिखें या माइक दबाएं..." onkeypress="if(event.key==='Enter') sendMessage()">
+    <button id="micBtn" class="btn btn-mic" onclick="startVoice()">🎤</button>
+    <input type="text" id="userInput" placeholder="बोलें या यहाँ लिखें..." onkeypress="if(event.key==='Enter') sendMessage()">
     <button class="btn" onclick="sendMessage()">➤</button>
-</div>
-
-<div id="live-screen">
-    <div style="color:#38bdf8;font-weight:bold;">✨ DTA AI LIVE MODE</div>
-    <div style="text-align:center;">
-        <div id="orb" class="orb" onclick="listenLive()"></div>
-        <h3 id="live-status" style="margin-top:25px;">तैयार हूँ...</h3>
-        <p id="live-sub" style="color:#94a3b8;margin-top:10px;padding:0 15px;">गोले को छूकर बोलें</p>
-    </div>
-    <div style="display:flex;gap:15px;">
-        <button class="small-btn" style="padding:12px 20px;font-size:1rem;" onclick="listenLive()">🎤 बोलें</button>
-        <button class="live-btn" style="padding:12px 25px;font-size:1rem;" onclick="closeLive()">✖ बंद करें</button>
-    </div>
 </div>
 
 <script>
     const chatBox = document.getElementById("chat-box");
-    const liveScreen = document.getElementById("live-screen");
-    const orb = document.getElementById("orb");
-    const liveStatus = document.getElementById("live-status");
-    const liveSub = document.getElementById("live-sub");
+    const statusBar = document.getElementById("status-bar");
+    const micBtn = document.getElementById("micBtn");
+    let autoSpeak = true;
 
-    let isLive = false;
-    let historyText = "";
+    function toggleVoice() {
+        autoSpeak = !autoSpeak;
+        const btn = document.getElementById("voiceToggle");
+        if (autoSpeak) {
+            btn.innerText = "🔊 आवाज़ ON";
+            btn.classList.add("active");
+        } else {
+            window.speechSynthesis.cancel();
+            btn.innerText = "🔇 आवाज़ OFF";
+            btn.classList.remove("active");
+        }
+    }
 
-    function addMsg(text, type, isAI) {
+    // फोन के स्पीकर से हिंदी में बोलने का फंक्शन
+    function speakText(text) {
+        try {
+            window.speechSynthesis.cancel();
+            const cleanText = text.replace(/[*#_`~]/g, '');
+            const msg = new SpeechSynthesisUtterance(cleanText);
+            msg.lang = "hi-IN";
+            msg.rate = 1.0;
+
+            const allVoices = window.speechSynthesis.getVoices();
+            const hindiVoice = allVoices.find(v => v.lang.includes("hi") || v.name.includes("Hindi"));
+            if (hindiVoice) msg.voice = hindiVoice;
+
+            msg.onstart = () => {
+                statusBar.style.display = "block";
+                statusBar.innerText = "🔊 DTA AI बोल रहा है...";
+            };
+            msg.onend = () => { statusBar.style.display = "none"; };
+            msg.onerror = () => { statusBar.style.display = "none"; };
+
+            window.speechSynthesis.speak(msg);
+        } catch (e) {
+            alert("आवाज़ चलाने में समस्या है।");
+        }
+    }
+
+    function appendMessage(text, className, isAI = false) {
         const div = document.createElement("div");
-        div.className = "msg " + type;
+        div.className = `msg ${className}`;
         div.innerText = text;
 
         if (isAI) {
-            const row = document.createElement("div");
-            row.className = "action-row";
-
-            const speakBtn = document.createElement("button");
-            speakBtn.className = "mini-btn";
-            speakBtn.innerText = "🔊 सुनें";
-            speakBtn.onclick = function() { speakNow(text, false); };
-
-            const copyBtn = document.createElement("button");
-            copyBtn.className = "mini-btn";
-            copyBtn.innerText = "📋 Copy";
-            copyBtn.onclick = function() {
-                navigator.clipboard.writeText(text);
-                copyBtn.innerText = "✅ Copied!";
-                setTimeout(function() { copyBtn.innerText = "📋 Copy"; }, 1500);
-            };
-
-            row.appendChild(speakBtn);
-            row.appendChild(copyBtn);
-            div.appendChild(row);
+            const btn = document.createElement("button");
+            btn.className = "speak-btn";
+            btn.innerText = "🔊 सुनें";
+            btn.onclick = () => speakText(text);
+            div.appendChild(document.createElement("br"));
+            div.appendChild(btn);
         }
 
         chatBox.appendChild(div);
@@ -243,148 +231,74 @@
         return div;
     }
 
-    async function askAI(question) {
-        const rule = "तुम्हारा नाम DTA Super AI है और तुम्हें देवेश (DTA कंपनी) ने बनाया है। तुम देवेश के स्मार्ट दोस्त और कोडिंग एक्सपर्ट हो। अगर कोई कोड मांगे तो पूरा कोड लिखकर दो, और बातचीत हो तो हिंदी में जवाब दो।\n";
-        const fullPrompt = rule + historyText + "\nदेवेश: " + question + "\nDTA AI:";
+    async function sendMessage() {
+        const inputField = document.getElementById("userInput");
+        const prompt = inputField.value.trim();
+        if (!prompt) return;
+
+        window.speechSynthesis.cancel();
+        appendMessage(prompt, "user-msg");
+        inputField.value = "";
+        const loadingMsg = appendMessage("सोच रहा हूँ...", "ai-msg");
 
         try {
-            const url = "[https://text.pollinations.ai/](https://text.pollinations.ai/)" + encodeURIComponent(fullPrompt);
-            const res = await fetch(url);
-            let reply = await res.text();
+            const sysPrompt = "तुम्हारा नाम DTA Super AI है और तुम्हें देवेश (DTA कंपनी) ने बनाया है। हमेशा हिंदी में छोटा और स्मार्ट जवाब दो।";
+            const url = "https://text.pollinations.ai/" + encodeURIComponent(sysPrompt + "\nसवाल: " + prompt);
+            const response = await fetch(url);
+            const reply = await response.text();
+            const finalReply = reply || "माफ़ करें, अभी जवाब नहीं मिल पाया।";
 
-            if (!reply || reply.includes("Please wait")) {
-                await new Promise(function(r) { setTimeout(r, 2000); });
-                const retryRes = await fetch(url + "?retry=1");
-                reply = await retryRes.text();
+            chatBox.removeChild(loadingMsg);
+            appendMessage(finalReply, "ai-msg", true);
+
+            if (autoSpeak) {
+                speakText(finalReply);
             }
-
-            const cleanReply = reply || "हां देवेश भाई, बताइए!";
-            historyText = (historyText + "\nदेवेश: " + question + "\nDTA AI: " + cleanReply).slice(-1200);
-            return cleanReply;
-        } catch (e) {
-            return "इंटरनेट थोड़ा स्लो है भाई, एक बार फिर से भेजें!";
+      } catch (error) {
+            loadingMsg.innerText = "इंटरनेट स्लो है, कृपया एक बार फिर से भेजें।";
         }
     }
 
-    async function sendMessage() {
-        const input = document.getElementById("userInput");
-        const text = input.value.trim();
-        if (!text) return;
-
-        window.speechSynthesis.cancel();
-        addMsg(text, "user-msg", false);
-        input.value = "";
-        const waitMsg = addMsg("सोच रहा हूँ...", "ai-msg", false);
-
-        const ans = await askAI(text);
-        chatBox.removeChild(waitMsg);
-        addMsg(ans, "ai-msg", true);
-        speakNow(ans, false);
-    }
-
-    function speakNow(text, autoListenNext) {
-        try {
-            window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance(text.replace(/[*#_]/g, ""));
-            msg.lang = "hi-IN";
-
-            const voices = window.speechSynthesis.getVoices();
-            for (let i = 0; i < voices.length; i++) {
-                if (voices[i].lang.includes("hi")) {
-                    msg.voice = voices[i];
-                    break;
-                }
-            }
-
-            msg.onstart = function() {
-                if (isLive) {
-                    orb.className = "orb speaking";
-                    liveStatus.innerText = "🔊 बोल रहा हूँ...";
-                }
-            };
-
-            msg.onend = function() {
-                if (isLive && autoListenNext) {
-                    orb.className = "orb";
-                    setTimeout(function() { if (isLive) listenLive(); }, 400);
-                }
-            };
-
-            window.speechSynthesis.speak(msg);
-        } catch (e) {}
-    }
-
-    function startMic() {
-        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SR) {
-            alert("माइक के लिए Chrome ब्राउज़र का उपयोग करें।");
+    function startVoice() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("माइक आपके ब्राउज़र में सपोर्ट नहीं कर रहा है।");
             return;
         }
+
         window.speechSynthesis.cancel();
-        const rec = new SR();
-        rec.lang = "hi-IN";
-        rec.onresult = function(e) {
-            document.getElementById("userInput").value = e.results[0][0].transcript;
+        const recognition = new SpeechRecognition();
+        recognition.lang = "hi-IN";
+
+        recognition.onstart = () => {
+            micBtn.classList.add("listening");
+            statusBar.style.display = "block";
+            statusBar.innerText = "🎤 अब बोलिए...";
+        };
+
+        recognition.onresult = (event) => {
+            const text = event.results[0][0].transcript;
+            document.getElementById("userInput").value = text;
             sendMessage();
         };
-        rec.start();
-    }
 
-    function openLive() {
-        isLive = true;
-        liveScreen.style.display = "flex";
-        listenLive();
-    }
-
-    function closeLive() {
-        isLive = false;
-        window.speechSynthesis.cancel();
-        liveScreen.style.display = "none";
-    }
-
-    function listenLive() {
-        if (!isLive) return;
-        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SR) return;
-
-        window.speechSynthesis.cancel();
-        const rec = new SR();
-        rec.lang = "hi-IN";
-
-        rec.onstart = function() {
-            orb.className = "orb listening";
-            liveStatus.innerText = "🎤 बोलिए देवेश भाई...";
+        recognition.onerror = (e) => {
+            statusBar.style.display = "none";
+            micBtn.classList.remove("listening");
+            alert("माइक चालू नहीं हो पाया। कृपया ऊपर URL के पास ताले (🔒) के निशान पर क्लिक करके Microphone को Allow करें।");
         };
 
-        rec.onresult = async function(e) {
-            const spoken = e.results[0][0].transcript;
-            liveSub.innerText = "आपने कहा: " + spoken;
-            addMsg(spoken, "user-msg", false);
-
-            orb.className = "orb";
-            liveStatus.innerText = "⚡ सोच रहा हूँ...";
-
-            const ans = await askAI(spoken);
-            addMsg(ans, "ai-msg", true);
-            liveSub.innerText = ans.slice(0, 100);
-
-            if (isLive) {
-                speakNow(ans, true);
-            }
+        recognition.onend = () => {
+            statusBar.style.display = "none";
+            micBtn.classList.remove("listening");
         };
 
-        rec.onerror = function() {
-            orb.className = "orb";
-            liveStatus.innerText = "गोले को छूकर बोलें";
-        };
-
-        rec.start();
+        recognition.start();
     }
 
     function clearChat() {
         window.speechSynthesis.cancel();
-        historyText = "";
-        chatBox.innerHTML = '<div class="msg ai-msg">चैट साफ़ हो गई! बताइए देवेश भाई, क्या मदद करूँ?</div>';
+        chatBox.innerHTML = '<div class="msg ai-msg">चैट साफ़ हो गई! बताइए मैं क्या मदद करूँ?</div>';
     }
 </script>
 
