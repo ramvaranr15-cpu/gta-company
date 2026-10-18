@@ -3,73 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTA WORLDWIDE - App Builder</title>
+    <title>DTA AI Assistant</title>
     <style>
-        body {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
         }
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
-        .card { background: rgba(0,0,0,0.85); padding: 30px; border-radius: 20px; text-align: center; border: 2px solid #fff; width: 350px; }
-        #payment-gate { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px dashed #fff; }
-        .pin-lock { width: 90%; padding: 12px; margin: 15px 0; border-radius: 10px; border: none; text-align: center; font-size: 18px; }
-        .btn-pay { background: #25D366; color: white; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; text-decoration: none; display: block; margin: 10px 0; }
-        .btn-unlock { background: #43bbd8; color: white; padding: 12px; border-radius: 10px; border: none; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; }
-        .link-item { background: #fff; color: #333; padding: 10px; display: block; margin: 10px 0; border-radius: 10px; text-decoration: none; font-weight: bold; }
+        header {
+            background: linear-gradient(90deg, #1e293b, #0f172a);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 1.2rem;
+            color: #38bdf8;
+        }
+        .api-box {
+            padding: 10px 15px;
+            background: #1e293b;
+            display: flex;
+            gap: 8px;
+        }
+        .api-box input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: #fff;
+        }
+        #chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .msg {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+        .user-msg {
+            background: #2563eb;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .ai-msg {
+            background: #1e293b;
+            color: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #334155;
+        }
+        .input-area {
+            padding: 12px;
+            background: #1e293b;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            outline: none;
+        }
+        .btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-mic {
+            background: #ef4444;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <script src="https://pl30616397.profitableratecpmnetwork.com/62/2e/4f/622e4fa456ab571077603cbf968f0d95.js"></script>
-    <div class="card">
-        <div id="payment-gate">
-            <h1>DTA BUILDER</h1>
-            <p>Worldwide App Project</p>
-            <div class="price">Fees: ₹50</div>
-            <div class="info-box">
-                <p style="margin: 5px 0; font-size: 14px;">👉 Link kholne ke liye niche diye gaye UPI number par payment karein:</p>
-                <p style="margin: 10px 0;"><b style="font-size: 20px; color: #ffb24;">6376409506@fam</b></p>
-            </div>
-            <a href="https://wa.me/918302930046" class="btn-pay" target="_blank">SEND SCREENSHOT (WhatsApp)</a>
-        </div>
 
-        <div style="margin: 20px 0; opacity: 0.3;">-------------------</div>
+<header>
+    <h1>🤖 DTA Super AI</h1>
+    <button onclick="clearChat()" style="background:none;border:none;color:#94a3b8;cursor:pointer;">साफ़ करें</button>
+</header>
 
-        <p>Unlock Code Dalein:</p>
-        <input type="text" id="passInput" class="pin-lock" placeholder="Enter Code">
-        <button class="btn-unlock" onclick="checkPass()">UNLOCK NOW</button>
+<!-- अपनी Gemini API Key यहाँ डालें -->
+<div class="api-box">
+    <input type="password" id="apiKey" placeholder="यहाँ अपनी Gemini API Key पेस्ट करें...">
+</div>
 
-        <div id="builder-area" style="display:none; margin-top: 20px;">
-            <h2 style="color: #4ade80;">✅ UNLOCKED</h2>
-            <a href="https://appinventor.mit.edu/" class="link-item" target="_blank">🚀 Start App Maker</a>
-            <a href="https://gdevelop.io/" class="link-item" target="_blank">🎮 Start Game Maker</a>
-        </div>
+<div id="chat-box">
+    <div class="msg ai-msg">नमस्ते! मैं DTA AI हूँ। आप मुझसे कोडिंग, पढ़ाई, बिज़नेस या किसी भी विषय पर सवाल पूछ सकते हैं!</div>
+</div>
 
-        <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">DTA Worldwide | Founder: Devesh</p>
-    </div>
+<div class="input-area">
+    <button class="btn btn-mic" onclick="startVoice()" title="बोलकर पूछें">🎤</button>
+    <input type="text" id="userInput" placeholder="अपना सवाल यहाँ लिखें..." onkeypress="if(event.key==='Enter') sendMessage()">
+    <button class="btn" onclick="sendMessage()">➤</button>
+</div>
 
-    <script>
-        function checkPass() {
-            let p = document.getElementById('passInput').value;
-            if (p === "DTA50") {
-                document.getElementById('payment-gate').style.display = 'none';
-                document.getElementById('builder-area').style.display = 'block';
-            } else {
-                alert('Galat Code! Payment karne ke baad sahi code dalein.');
-            }
+<script>
+    const chatBox = document.getElementById("chat-box");
+
+    function appendMessage(text, className) {
+        const div = document.createElement("div");
+        div.className = `msg ${className}`;
+        div.innerText = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return div;
+    }
+
+    async function sendMessage() {
+        const inputField = document.getElementById("userInput");
+        const apiKey = document.getElementById("apiKey").value.trim();
+        const prompt = inputField.value.trim();
+
+        if (!prompt) return;
+        if (!apiKey) {
+            alert("कृपया पहले ऊपर वाले बॉक्स में अपनी Gemini API Key डालें!");
+            return;
         }
-    </script>
+
+        appendMessage(prompt, "user-msg");
+        inputField.value = "";
+        const loadingMsg = appendMessage("सोच रहा हूँ...", "ai-msg");
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    system_instruction: {
+                        parts: [{ text: "तुम्हारा नाम DTA AI है। तुम एक स्मार्ट, मददगार और दोस्ताना AI असिस्टेंट हो।" }]
+                    },
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+
+            const data = await response.json();
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                const reply = data.candidates[0].content.parts[0].text;
+                loadingMsg.innerText = reply;
+            } else {
+                loadingMsg.innerText = "त्रुटि: API Key सही नहीं है या कोई समस्या आई है।";
+            }
+        } catch (error) {
+            loadingMsg.innerText = "इंटरनेट या सर्वर कनेक्शन में समस्या है।";
+        }
+    }
+
+    // माइक से बोलकर टाइप करने का फ़ीचर
+    function startVoice() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("आपका ब्राउज़र वॉयस इनपुट सपोर्ट नहीं करता। Chrome का उपयोग करें।");
+            return;
+        }
+        const recognition = new SpeechRecognition();
+        recognition.lang = "hi-IN";
+        recognition.start();
+        recognition.onresult = function(event) {
+            document.getElementById("userInput").value = event.results[0][0].transcript;
+            sendMessage();
+        };
+    }
+
+    function clearChat() {
+        chatBox.innerHTML = '<div class="msg ai-msg">चैट साफ़ हो गई! बताइए, अब मैं आपकी क्या मदद करूँ?</div>';
+    }
+</script>
+
 </body>
-                </html>
-    
+        </html>
+        
